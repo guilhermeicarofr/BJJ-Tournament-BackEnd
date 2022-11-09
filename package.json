@@ -1,11 +1,12 @@
 {
   "name": "bjj-tournament",
+  "type": "module",
   "version": "1.0.0",
   "description": "A web service to register BJJ athletes to a tournament",
   "main": "index.js",
   "scripts": {
-    "dev": "node --watch ./src/index.ts",
-    "build&run": "npx tsc && node ./dist/index.js",
+    "dev": "npx nodemon ./src/index.ts",
+    "build": "npx tsc && node ./dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
