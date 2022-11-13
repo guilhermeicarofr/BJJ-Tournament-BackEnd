@@ -5,3 +5,4 @@
 
 #files
 .env
+/dist
