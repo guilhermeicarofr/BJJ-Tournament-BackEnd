@@ -6,7 +6,7 @@ config();
 import athleteControllers from './controllers/athlete.controllers.js';
 import { validateSchema } from './middlewares/validation.middlewares.js';
 import { athleteInputSchema } from './schemas/schemas.js';
-import { listTournament } from './controllers/tournament.controllers.js';
+import { listAbsolute, listTournament } from './controllers/tournament.controllers.js';
 
 const server = express();
 server.use(cors());
@@ -18,5 +18,6 @@ server.put('/athletes/:id', validateSchema(athleteInputSchema), athleteControlle
 server.delete('/athletes/:id', athleteControllers.removeOne);
 
 server.get('/tournament/:belt/:age/:weight', listTournament);
+server.get('/tournament/:belt/absolute', listAbsolute);
 
 server.listen(process.env.PORT, () => {console.log(`Listening on port ${process.env.PORT}...`)});

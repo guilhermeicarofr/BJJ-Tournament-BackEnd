@@ -36,8 +36,8 @@ function weightClass(weight: string): number[] {
         case 'heavy':
             range = [89, 100];
             break;
-        case 'absolute':
-            range = [0, 999];
+        case 'super-heavy':
+            range = [101, 999];
             break;
         default:
             break;

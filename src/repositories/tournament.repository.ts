@@ -4,7 +4,15 @@ import { db } from '../database/database.js';
 import { Athlete } from '../protocols/athlete.js';
 import { Category } from '../protocols/tournament.js'
 
-function selectByCategory(category: Category): Promise<QueryResult<Athlete>> {
+async function selectBelt(belt: string ): Promise<QueryResult<{id: number, name: string}>>{
+    return db.query(`SELECT *
+                        FROM belts
+                        WHERE belts.id=$1
+                        LIMIT 1;`,
+                        [ belt ]);
+}
+
+async function selectByCategory(category: Category): Promise<QueryResult<Athlete>> {
     return db.query(`SELECT athletes.id, athletes.name, athletes.weight, athletes.age, athletes.team, belts.name AS "belt" 
                         FROM athletes 
                         JOIN belts ON athletes.belt_id=belts.id
@@ -22,4 +30,12 @@ function selectByCategory(category: Category): Promise<QueryResult<Athlete>> {
                         ]);
 }
 
-export { selectByCategory };
+async function selectAbsolute(belt: string): Promise<QueryResult<Athlete>> {
+    return db.query(`SELECT athletes.id, athletes.name, athletes.weight, athletes.age, athletes.team, belts.name AS "belt" 
+                        FROM athletes 
+                        JOIN belts ON athletes.belt_id=belts.id
+                        WHERE athletes.belt_id=$1;`,
+                        [ belt ]);
+}
+
+export { selectByCategory, selectBelt, selectAbsolute };
