@@ -1,15 +1,10 @@
 type Athlete = {
-    id: number,
+    id?: number,
     name: string,
-    weigth: number,
+    weight: number,
     age: number,
-    belt: string,
+    belt: (string | number),
     team: string
 }
 
-type Belt = {
-    id: number,
-    name: string
-}
-
-export { Athlete, Belt };
+export { Athlete };
