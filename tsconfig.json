@@ -1,19 +1,19 @@
 {
-    "compilerOptions": {
-        "outDir": "dist",
-        "esModuleInterop": true,
-        "module": "commonjs",
-        "moduleResolution": "Node",
-        "noImplicitAny": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "baseUrl": "src"
-    },
-    "ts-node": {
-        "esm": true
-    },
-    "include": [
-        "src",
-        "tests"
-    ]
+  "compilerOptions": {
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "moduleResolution": "Node",
+    "noImplicitAny": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "baseUrl": "src"
+  },
+  "ts-node": {
+    "esm": true
+  },
+  "include": [
+    "src",
+    "tests"
+  ]
 }

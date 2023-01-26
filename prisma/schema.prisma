@@ -10,7 +10,6 @@ datasource db {
 model athleteInfo {
   id        Int       @id(map: "athleteInfo_pk") @default(autoincrement())
   userId    Int
-  cpf       String    @unique @db.VarChar(255)
   male      Boolean
   belt      Int
   weight    Int
@@ -92,6 +91,7 @@ model users {
   email                         String          @unique @db.VarChar(255)
   password                      String          @db.VarChar(255)
   name                          String          @db.VarChar(255)
+  cpf                           String          @unique @db.VarChar(255)
   createdAt                     DateTime        @default(now()) @db.Timestamp(6)
   updatedAt                     DateTime        @default(now()) @db.Timestamp(6)
   deletedAt                     DateTime?       @db.Timestamp(6)

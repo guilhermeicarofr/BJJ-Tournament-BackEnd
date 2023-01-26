@@ -21,6 +21,12 @@
     "test:coverage": "NODE_ENV=test jest --passWithNoTests --runInBand --coverage --collectCoverageFrom='./src/**'",
     "test:migration:apply": "npm run test:load-envs prisma migrate deploy",
     "test:migration:generate": "npm run test:load-envs prisma migrate dev",
+    "local": "NODE_ENV=local nodemon ./src/index.ts",
+    "local:load-envs": "dotenv -e .env.local",
+    "local:migration:apply": "npm run local:load-envs prisma migrate deploy",
+    "local:migration:generate": "npm run local:load-envs prisma migrate dev",
+    "local:seed": "npm run local:load-envs prisma db seed",
+
     "lint": "eslint ."
   },
   "repository": {

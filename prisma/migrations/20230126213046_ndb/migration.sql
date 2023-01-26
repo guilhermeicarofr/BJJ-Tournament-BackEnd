@@ -2,7 +2,6 @@
 CREATE TABLE "athleteInfo" (
     "id" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
-    "cpf" VARCHAR(255) NOT NULL,
     "male" BOOLEAN NOT NULL,
     "belt" INTEGER NOT NULL,
     "weight" INTEGER NOT NULL,
@@ -83,6 +82,7 @@ CREATE TABLE "users" (
     "email" VARCHAR(255) NOT NULL,
     "password" VARCHAR(255) NOT NULL,
     "name" VARCHAR(255) NOT NULL,
+    "cpf" VARCHAR(255) NOT NULL,
     "createdAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deletedAt" TIMESTAMP(6),
@@ -91,10 +91,10 @@ CREATE TABLE "users" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "athleteInfo_cpf_key" ON "athleteInfo"("cpf");
+CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+CREATE UNIQUE INDEX "users_cpf_key" ON "users"("cpf");
 
 -- AddForeignKey
 ALTER TABLE "athleteInfo" ADD CONSTRAINT "athleteInfo_fk0" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
