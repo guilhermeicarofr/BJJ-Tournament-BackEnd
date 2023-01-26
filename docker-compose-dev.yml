@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres
+    container_name: db
+    ports:
+      - 2345:5432
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: app_dev
+    ports:
+      - 5000:4000
+    env_file:
+      - .env.development
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - db
+    entrypoint: dockerize -wait tcp://db:5432 -timeout 20s docker-entrypoint.sh
+    command: "npm run launch:dev"
+
+volumes:
+  db_volume:
