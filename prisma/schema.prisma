@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,4 +5,100 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model athleteInfo {
+  id        Int       @id(map: "athleteInfo_pk") @default(autoincrement())
+  userId    Int
+  cpf       String    @unique @db.VarChar(255)
+  male      Boolean
+  belt      Int
+  weight    Int
+  age       Int
+  createdAt DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt DateTime  @default(now()) @db.Timestamp(6)
+  deletedAt DateTime? @db.Timestamp(6)
+  users     users     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "athleteInfo_fk0")
+}
+
+model categories {
+  id            Int             @id(map: "categories_pk") @default(autoincrement())
+  eventId       Int
+  absolute      Boolean
+  male          Boolean
+  belt          Int
+  weightClass   Int
+  ageClass      Int
+  createdAt     DateTime        @default(now()) @db.Timestamp(6)
+  updatedAt     DateTime        @default(now()) @db.Timestamp(6)
+  deletedAt     DateTime?       @db.Timestamp(6)
+  event         event           @relation(fields: [eventId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "categories_fk0")
+  fights        fights[]
+  registrations registrations[]
+}
+
+model event {
+  id          Int          @id(map: "event_pk") @default(autoincrement())
+  createdBy   Int
+  name        String       @db.VarChar(255)
+  date        DateTime     @db.Date
+  price       Int
+  absolute    Boolean
+  description String
+  open        Boolean      @default(true)
+  finished    Boolean      @default(false)
+  createdAt   DateTime     @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime     @default(now()) @db.Timestamp(6)
+  deletedAt   DateTime?    @db.Timestamp(6)
+  categories  categories[]
+  users       users        @relation(fields: [createdBy], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "event_fk0")
+}
+
+model fights {
+  id                                         Int        @id(map: "fights_pk") @default(autoincrement())
+  categoriesId                               Int
+  athlete1                                   Int
+  athlete2                                   Int
+  winner                                     Int
+  previousFight1                             Int?
+  previousFight2                             Int?
+  final                                      Boolean
+  createdAt                                  DateTime   @default(now()) @db.Timestamp(6)
+  updatedAt                                  DateTime   @default(now()) @db.Timestamp(6)
+  deletedAt                                  DateTime?  @db.Timestamp(6)
+  categories                                 categories @relation(fields: [categoriesId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fights_fk0")
+  users_fights_athlete1Tousers               users      @relation("fights_athlete1Tousers", fields: [athlete1], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fights_fk1")
+  users_fights_athlete2Tousers               users      @relation("fights_athlete2Tousers", fields: [athlete2], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fights_fk2")
+  users_fights_winnerTousers                 users      @relation("fights_winnerTousers", fields: [winner], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fights_fk3")
+  fights_fights_previousFight1Tofights       fights?    @relation("fights_previousFight1Tofights", fields: [previousFight1], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fights_fk4")
+  other_fights_fights_previousFight1Tofights fights[]   @relation("fights_previousFight1Tofights")
+  fights_fights_previousFight2Tofights       fights?    @relation("fights_previousFight2Tofights", fields: [previousFight2], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fights_fk5")
+  other_fights_fights_previousFight2Tofights fights[]   @relation("fights_previousFight2Tofights")
+}
+
+model registrations {
+  id         Int        @id(map: "registrations_pk") @default(autoincrement())
+  userId     Int
+  categoryId Int
+  createdAt  DateTime   @default(now()) @db.Timestamp(6)
+  updatedAt  DateTime   @default(now()) @db.Timestamp(6)
+  deletedAt  DateTime?  @db.Timestamp(6)
+  users      users      @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "registrations_fk0")
+  categories categories @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "registrations_fk1")
+}
+
+model users {
+  id                            Int             @id(map: "users_pk") @default(autoincrement())
+  email                         String          @unique @db.VarChar(255)
+  password                      String          @db.VarChar(255)
+  name                          String          @db.VarChar(255)
+  createdAt                     DateTime        @default(now()) @db.Timestamp(6)
+  updatedAt                     DateTime        @default(now()) @db.Timestamp(6)
+  deletedAt                     DateTime?       @db.Timestamp(6)
+  athleteInfo                   athleteInfo[]
+  event                         event[]
+  fights_fights_athlete1Tousers fights[]        @relation("fights_athlete1Tousers")
+  fights_fights_athlete2Tousers fights[]        @relation("fights_athlete2Tousers")
+  fights_fights_winnerTousers   fights[]        @relation("fights_winnerTousers")
+  registrations                 registrations[]
 }

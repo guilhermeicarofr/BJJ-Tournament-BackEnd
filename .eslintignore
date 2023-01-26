@@ -3,6 +3,7 @@ dist
 coverage
 *.js
 *.json
+*.sql
 README.md
 .env*
 prisma/**/*

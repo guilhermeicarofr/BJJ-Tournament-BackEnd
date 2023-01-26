@@ -1,0 +1,152 @@
+{
+	"ageClasses": [
+		{
+			"id": 1,
+			"name": "adult",
+			"min": 18,
+			"max": 29
+		},
+		{
+			"id": 2,
+			"name": "master1",
+			"min": 30,
+			"max": 35
+		},
+		{
+			"id": 3,
+			"name": "master2",
+			"min": 36,
+			"max": 40
+		},
+		{
+			"id": 4,
+			"name": "master3",
+			"min": 41,
+			"max": 45
+		},
+		{
+			"id": 5,
+			"name": "master4",
+			"min": 46,
+			"max": 99
+		}
+	],
+	"weigthClasses": {
+		"male": [
+			{
+				"id": 1,
+				"name": "rooster",
+				"min": 0,
+				"max": 64000
+			},
+			{
+				"id": 2,
+				"name": "feather",
+				"min": 65000,
+				"max": 70000
+			},
+			{
+				"id": 3,
+				"name": "light",
+				"min": 71000,
+				"max": 76000
+			},
+			{
+				"id": 4,
+				"name": "middle",
+				"min": 77000,
+				"max": 82300
+			},
+			{
+				"id": 5,
+				"name": "medium-heavy",
+				"min": 82400,
+				"max": 88300
+			},
+			{
+				"id": 6,
+				"name": "heavy",
+				"min": 88400,
+				"max": 94300
+			},
+			{
+				"id": 7,
+				"name": "super-heavy",
+				"min": 94400,
+				"max": 100500
+			},
+			{
+				"id": 8,
+				"name": "ultra-heavy",
+				"min": 100600,
+				"max": 1000000
+			}
+		],
+		"female": [
+			{
+				"id": 1,
+				"name": "rooster",
+				"min": 0,
+				"max": 53500
+			},
+			{
+				"id": 2,
+				"name": "feather",
+				"min": 53600,
+				"max": 58500
+			},
+			{
+				"id": 3,
+				"name": "light",
+				"min": 58600,
+				"max": 64000
+			},
+			{
+				"id": 4,
+				"name": "middle",
+				"min": 64100,
+				"max": 69000
+			},
+			{
+				"id": 5,
+				"name": "medium-heavy",
+				"min": 69100,
+				"max": 74000
+			},
+			{
+				"id": 6,
+				"name": "heavy",
+				"min": 74100,
+				"max": 79300
+			},
+			{
+				"id": 7,
+				"name": "super-heavy",
+				"min": 79400,
+				"max": 100000
+			}
+		]
+	},
+	"belts": [
+		{
+			"id": 1,
+			"name": "white"
+		},
+		{
+			"id": 2,
+			"name": "blue"
+		},
+		{
+			"id": 3,
+			"name": "purple"
+		},
+		{
+			"id": 4,
+			"name": "brown"
+		},
+		{
+			"id": 5,
+			"name": "black"
+		}
+	]
+}
