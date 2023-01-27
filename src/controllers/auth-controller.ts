@@ -12,7 +12,6 @@ export async function signUp(req: Request, res: Response) {
     return res.sendStatus(httpStatus.CREATED);
   } catch (error) {
     if(error.name === 'InvalidSignUp') return res.status(httpStatus.UNAUTHORIZED).send(error.message);
-    return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
   }
 }
 
@@ -24,6 +23,5 @@ export async function signIn(req: Request, res: Response) {
     return res.status(httpStatus.OK).send(token);
   } catch (error) {
     if(error.name === 'InvalidSignIn') return res.status(httpStatus.UNAUTHORIZED).send(error.message);
-    return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
   }
 }

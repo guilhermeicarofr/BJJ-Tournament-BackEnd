@@ -6,6 +6,6 @@ export async function getEvents(req: Request, res: Response) {
     //const events = await eventsService.getAllEvents();
     //return res.status(httpStatus.OK).send(events);
   } catch (error) {
-    return res.status(httpStatus.NOT_FOUND);
+    //return res.status(httpStatus.NOT_FOUND);
   }
 }

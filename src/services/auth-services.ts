@@ -2,9 +2,9 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { users } from '@prisma/client';
 
-import errors from 'errors/errors';
+import { errors } from 'errors/errors';
 import { SignInData, SignUpData } from 'protocols/types';
-import userRepository from 'repositories/user-repository';
+import { userRepository } from 'repositories/user-repository';
 
 async function userEmailInUse(email: string) {
   const user = await userRepository.findByEmail(email);
@@ -26,6 +26,12 @@ async function userEmailCheck(email: string) {
 
 function validateUserPassword(user: users, password: string) {
   if(!bcrypt.compareSync(password, user.password)) throw errors.signInError();
+  return;
+}
+
+export async function userIdCheck(userId: number) {
+  const user = await userRepository.findById(userId);
+  if(!user) throw errors.signInError();
   return;
 }
 
