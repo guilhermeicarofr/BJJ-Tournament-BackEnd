@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
 
 import { errors } from 'errors/errors';
-import { ApplicationError, AuthenticatedRequest, ValidatedAuthToken } from 'protocols/types';
+import { AuthenticatedRequest, ValidatedAuthToken } from 'protocols/types';
 import { userIdCheck } from 'services/auth-services';
 
 export function validateSchema(schema: Schema, type: 'body' | 'params' | 'query') {
@@ -39,5 +39,11 @@ export async function validateAuthToken(req: AuthenticatedRequest , res: Respons
 }
 
 export async function lastErrorCatch(req: Request, res: Response) {
-  return res.status(httpStatus.INTERNAL_SERVER_ERROR).send("Internal Server Error");
+  try {
+    return;
+  } catch(error) {
+    /* eslint-disable-next-line no-console */
+    console.log(error);
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).send('Internal Server Error');
+  }
 }

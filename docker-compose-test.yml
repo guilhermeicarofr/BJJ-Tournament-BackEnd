@@ -7,11 +7,11 @@ services:
 
   app:
     build: .
-    container_name: app_prod
+    container_name: app_test
     ports:
-      - 80:4000
+      - 5000:4000
     env_file:
-      - .env.prod
+      - .env.test
     volumes:
       - .:/app
       - /app/node_modules
@@ -22,5 +22,5 @@ services:
       - sh
       - -c
       - |
-        npm run prod:migration:apply
-        npm run prod
+        npm run test:migration:apply
+        npm run test:watch

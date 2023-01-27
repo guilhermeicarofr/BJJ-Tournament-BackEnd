@@ -55,9 +55,5 @@ export async function signInUser(data: SignInData) {
   
   const SECRET = process.env.JWT_SECRET;
   const token = jwt.sign({ userName: user.name, userId: user.id }, SECRET);
-<<<<<<< Updated upstream
-  return token;
-=======
   return { token };
->>>>>>> Stashed changes
 }

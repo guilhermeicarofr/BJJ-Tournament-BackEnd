@@ -13,14 +13,19 @@ services:
     ports:
       - 5000:4000
     env_file:
-      - .env.development
+      - .env.dev
     volumes:
       - .:/app
       - /app/node_modules
     depends_on:
       - db
     entrypoint: dockerize -wait tcp://db:5432 -timeout 20s docker-entrypoint.sh
-    command: "npm run launch:dev"
+    command:
+    - sh
+    - -c
+    - |
+      npm run dev:migration:apply
+      npm run dev
 
 volumes:
   db_volume:

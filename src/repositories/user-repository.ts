@@ -17,7 +17,7 @@ async function findByCpf(cpf: string) {
   });
 }
 
-async function  findById(id: number) {
+async function findById(id: number) {
   return db.users.findUnique({
     where: {
       id
