@@ -1,16 +1,17 @@
+import { getCreatedEvents } from 'controllers/creator-controller';
 import { Router } from 'express';
 
-import { validateAuthToken, validateSchema } from 'middlewares/validation-middlewares';
-import { schemas } from 'schemas/schemas';
+import { validateAuthToken } from 'middlewares/validation-middlewares';
 
 const creatorRouter = Router();
 
 creatorRouter
-  .all('/', validateAuthToken);
-  //.get('/events', getCreatedEvents)
-  //.post('/events', postNewEvent)
-  //.put('/events/:eventId/close')
-  //.put('/events/:eventId/run')
-  //.put('/events/:eventId/finish')
+  .all('/', validateAuthToken)
+  .get('/events', getCreatedEvents)
+//.post('/events', postNewEvent)
+//middleware to check event ownership
+//.put('/events/:eventId/close')
+//.put('/events/:eventId/run')
+//.put('/events/:eventId/finish')
 
 export { creatorRouter };

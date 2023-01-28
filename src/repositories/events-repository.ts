@@ -39,12 +39,21 @@ async function findById(id: number) {
   });
 }
 
+async function findByCreator(createdBy: number) {
+  return await db.event.findMany({
+    where: {
+      createdBy
+    }
+  });
+}
+
 const eventsRepository = {
   findAll,
   findOpen,
   findClosed,
   findFinished,
-  findById
+  findById,
+  findByCreator
 };
 
 export { eventsRepository };
