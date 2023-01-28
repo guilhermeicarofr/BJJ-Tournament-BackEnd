@@ -6,7 +6,7 @@ module.exports = {
     ".+\\.ts$": "ts-jest",
   },
   testMatch: ["<rootDir>/tests/**/*-tests.ts"],
-  setupFiles: ["<rootDir>/setup-envs.ts"],
+  setupFiles: ["<rootDir>/src/setup-envs.ts"],
   moduleNameMapper: {
     "@/(.*)": "<rootDir>/src/$1",
     "@test/(.*)": "<rootDir>/tests/$1"

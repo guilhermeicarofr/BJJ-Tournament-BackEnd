@@ -50,7 +50,7 @@ describe('POST /auth/signin', () => {
 
       const response = await testServer.post('/auth/signin').send({
         email: user.email,
-        password: faker.lorem.word(),
+        password: faker.internet.password(6),
       });
 
       expect(response.status).toBe(httpStatus.UNAUTHORIZED);
