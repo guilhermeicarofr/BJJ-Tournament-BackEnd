@@ -1,5 +1,6 @@
 import { Request } from 'express';
 import { JwtPayload } from 'jsonwebtoken';
+import { finished } from 'stream';
 
 export type ApplicationError = {
   name: string;
@@ -23,4 +24,8 @@ export type SignUpData = {
 export type SignInData = {
   email: string;
   password: string;
+}
+
+export type FilterQuery = {
+  filter: 'open' | 'closed' | 'finished'
 }

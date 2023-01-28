@@ -4,6 +4,7 @@ import cors from 'cors';
 import { loadEnv } from './setup-envs';
 import { authRouter } from 'routers/auth-router';
 import { lastErrorCatch, validateAuthToken } from 'middlewares/validation-middlewares';
+import { eventsRouter } from 'routers/events-router';
 
 loadEnv();
 const PORT = process.env.PORT || 5000;
@@ -16,8 +17,8 @@ server.use(express.json());
 server.get('/health', () => console.log('ok'));
 
 server.use('/auth', authRouter);
-server.use(validateAuthToken);
-//server.use('/events', eventsRouter);
+server.use('/events', eventsRouter);
+//server.use(validateAuthToken);
 server.use(lastErrorCatch);
 
 /* eslint-disable-next-line no-console */

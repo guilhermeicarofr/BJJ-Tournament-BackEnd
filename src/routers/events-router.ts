@@ -3,6 +3,6 @@ import { Router } from 'express';
 
 const eventsRouter = Router();
 
-eventsRouter.get('/', getEvents);
+eventsRouter.get('/list', getEvents);
 
 export { eventsRouter };
