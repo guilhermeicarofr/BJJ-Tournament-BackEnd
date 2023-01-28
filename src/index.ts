@@ -1,11 +1,12 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
+import httpStatus from 'http-status';
 
 import { loadEnv } from './setup-envs';
 import { authRouter } from 'routers/auth-router';
 import { lastErrorCatch, validateAuthToken } from 'middlewares/validation-middlewares';
 import { eventsRouter } from 'routers/events-router';
-import httpStatus from 'http-status';
+import { creatorRouter } from 'routers/creator-router';
 
 loadEnv();
 const PORT = process.env.PORT || 5000;
@@ -24,8 +25,8 @@ server.get('/health', (req: Request, res: Response) => {
 server
   .use('/auth', authRouter)
   .use('/events', eventsRouter)
-  .use(lastErrorCatch)
-  .use(validateAuthToken);
+  .use('/creator', creatorRouter)
+  .use(lastErrorCatch);
 
 if(ENV !== 'test') {
   /* eslint-disable-next-line no-console */
