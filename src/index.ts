@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 
-import { loadEnv } from '../setup-envs';
+import { loadEnv } from './setup-envs';
 import { authRouter } from 'routers/auth-router';
 import { lastErrorCatch, validateAuthToken } from 'middlewares/validation-middlewares';
 

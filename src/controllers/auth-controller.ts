@@ -11,7 +11,7 @@ export async function signUp(req: Request, res: Response) {
     await registerNewUser({ name, cpf, email, password });
     return res.sendStatus(httpStatus.CREATED);
   } catch (error) {
-    if(error.name === 'InvalidSignUp') return res.status(httpStatus.UNAUTHORIZED).send(error.message);
+    if(error.name === 'InvalidSignUp') return res.status(httpStatus.FORBIDDEN).send(error.message);
   }
 }
 

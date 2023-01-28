@@ -15,6 +15,6 @@
   "include": [
     "src",
     "tests",
-    "setup-envs.ts"
+    "src/setup-envs.ts"
   ]
 }

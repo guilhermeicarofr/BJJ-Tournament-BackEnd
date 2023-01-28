@@ -17,11 +17,11 @@ export function validateSchema(schema: Schema, type: 'body' | 'params' | 'query'
   };
 }
 
-export async function validateAuthToken(req: AuthenticatedRequest , res: Response, next: NextFunction) {
-  const authHeader = req.header("Authorization");
+export async function validateAuthToken(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  const authHeader = req.header('Authorization');
   if (!authHeader) throw errors.signInError();
 
-  const token = authHeader.split(" ")[1];
+  const token = authHeader.split(' ')[1];
   if (!token) throw errors.signInError();
 
   try {
