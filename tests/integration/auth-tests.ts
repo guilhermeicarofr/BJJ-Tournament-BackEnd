@@ -7,7 +7,7 @@ import supertest from 'supertest';
 import { createUser } from '../factories/auth-factories';
 import { cleanDb } from '../factories/helpers';
 
-beforeAll(async () => {
+beforeEach(async () => {
   await cleanDb();
 });
 
@@ -129,7 +129,6 @@ describe('POST /auth/signup', () => {
 
     describe('when data is valid', () => {
       it('should respond with status 201', async () => {
-         
         const body = {
           name: faker.name.firstName(),
           cpf: String(faker.datatype.number({ min: 11111111111 })),

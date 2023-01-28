@@ -12,9 +12,16 @@ const signIn = joi.object({
   password: joi.string().required().max(50).min(4).trim(),
 });
 
+const idParam = (idName: string) => {
+  return joi.object({
+    [idName]: joi.number().integer().min(1).required()
+  });
+};
+
 const schemas = {
   signUp,
   signIn,
+  idParam
 };
 
 export { schemas };

@@ -14,9 +14,17 @@ function signInError(): ApplicationError {
   };
 }
 
+function notFoundError(): ApplicationError {
+  return {
+    name: 'NotFound',
+    message: 'Entity not found'
+  };
+}
+
 const errors = {
   signUpError,
-  signInError
+  signInError,
+  notFoundError
 };
 
 export { errors };
