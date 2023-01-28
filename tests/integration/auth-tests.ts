@@ -7,7 +7,7 @@ import supertest from 'supertest';
 import { createUser } from '../factories/auth-factories';
 import { cleanDb } from '../factories/helpers';
 
-beforeAll(async () => {
+beforeEach(async () => {
   await cleanDb();
 });
 
