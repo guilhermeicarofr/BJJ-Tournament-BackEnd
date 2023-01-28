@@ -6,8 +6,8 @@ import { validateAuthToken } from 'middlewares/validation-middlewares';
 const creatorRouter = Router();
 
 creatorRouter
-  .all('/', validateAuthToken)
-  .get('/events', getCreatedEvents)
+  .use('/*', validateAuthToken)
+  .get('/events', getCreatedEvents);
 //.post('/events', postNewEvent)
 //middleware to check event ownership
 //.put('/events/:eventId/close')
