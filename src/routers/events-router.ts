@@ -7,6 +7,6 @@ const eventsRouter = Router();
 
 eventsRouter
   .get('/list', getEvents)
-  .get('open/:eventId', validateSchema(schemas.idParam('eventId'), 'params'), getEventInfo);
+  .get('/open/:eventId', validateSchema(schemas.idParam('eventId'), 'params'), getEventInfo);
 
 export { eventsRouter };

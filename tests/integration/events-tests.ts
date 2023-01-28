@@ -113,3 +113,44 @@ describe('GET /events/list', () => {
     ]);
   });
 });
+
+describe('GET /events/open/:eventId', () => {
+
+
+
+
+
+  it('should respond with status 400 when param is a string', async () => {
+    const response = await testServer.get('/events/open/string');
+
+    expect(response.status).toBe(httpStatus.BAD_REQUEST);
+  });
+
+  it('should respond with status 400 when param is invalid', async () => {
+    const response = await testServer.get('/events/open/0');
+
+    expect(response.status).toBe(httpStatus.BAD_REQUEST);
+  });
+
+  it('should respond with status 404 when id is not an event', async () => {
+    const response = await testServer.get('/events/open/1');
+
+    expect(response.status).toBe(httpStatus.NOT_FOUND);
+  });
+
+  it('should respond with status 200 and event info when events exists', async () => {
+    const password = faker.internet.password(6);
+    const user = await createUser(password);
+    const event = await createEvent({ createdBy: user.id, open: true, finished: false, absolute: false });
+
+    const response = await testServer.get(`/events/open/${event.id}`);
+
+    expect(response.status).toBe(httpStatus.OK);
+    expect(response.body).toEqual({ 
+      ...event,
+      date: event.date.toISOString(),
+      createdAt: event.createdAt.toISOString(),
+      updatedAt: event.updatedAt.toISOString()
+    });
+  });
+});
