@@ -31,11 +31,20 @@ async function findFinished() {
   });
 }
 
+async function findById(id: number) {
+  return await db.event.findUnique({
+    where: {
+      id
+    }
+  });
+}
+
 const eventsRepository = {
   findAll,
   findOpen,
   findClosed,
-  findFinished
+  findFinished,
+  findById
 };
 
 export { eventsRepository };
