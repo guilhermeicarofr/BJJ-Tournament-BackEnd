@@ -1,6 +1,5 @@
 import { Request } from 'express';
 import { JwtPayload } from 'jsonwebtoken';
-import { finished } from 'stream';
 
 export type ApplicationError = {
   name: string;

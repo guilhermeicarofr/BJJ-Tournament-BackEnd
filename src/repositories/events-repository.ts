@@ -1,4 +1,4 @@
-import { db } from "database/database";
+import { db } from 'database/database';
 
 async function findAll() {
   return await db.event.findMany({});
@@ -36,6 +36,6 @@ const eventsRepository = {
   findOpen,
   findClosed,
   findFinished
-}
+};
 
 export { eventsRepository };

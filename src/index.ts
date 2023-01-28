@@ -15,8 +15,8 @@ const server = express();
 server.use(cors());
 server.use(express.json());
 
-/* eslint-disable-next-line no-console */
 server.get('/health', (req: Request, res: Response) => { 
+  /* eslint-disable-next-line no-console */
   console.log('OK');
   return res.sendStatus(httpStatus.OK).send('OK');
 });
@@ -24,11 +24,11 @@ server.get('/health', (req: Request, res: Response) => {
 server
   .use('/auth', authRouter)
   .use('/events', eventsRouter)
-  .use(lastErrorCatch);
-//.use(validateAuthToken);
+  .use(lastErrorCatch)
+  .use(validateAuthToken);
 
-/* eslint-disable-next-line no-console */
 if(ENV !== 'test') {
+  /* eslint-disable-next-line no-console */
   server.listen(PORT, () => console.log(`Listening on port ${PORT}...`));
 }
 
