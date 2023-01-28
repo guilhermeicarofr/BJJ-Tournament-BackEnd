@@ -6,6 +6,7 @@ import { cleanDb } from '../factories/helpers';
 import { createEvent } from '../factories/events-factories';
 import { createUser } from '../factories/auth-factories';
 import { faker } from '@faker-js/faker';
+import { getClasses } from 'utils/get-local';
 
 beforeEach(async () => {
   await cleanDb();
@@ -115,11 +116,6 @@ describe('GET /events/list', () => {
 });
 
 describe('GET /events/open/:eventId', () => {
-
-
-
-
-
   it('should respond with status 400 when param is a string', async () => {
     const response = await testServer.get('/events/open/string');
 
@@ -142,15 +138,20 @@ describe('GET /events/open/:eventId', () => {
     const password = faker.internet.password(6);
     const user = await createUser(password);
     const event = await createEvent({ createdBy: user.id, open: true, finished: false, absolute: false });
+    
+    const classes = await getClasses();
 
     const response = await testServer.get(`/events/open/${event.id}`);
 
     expect(response.status).toBe(httpStatus.OK);
-    expect(response.body).toEqual({ 
-      ...event,
-      date: event.date.toISOString(),
-      createdAt: event.createdAt.toISOString(),
-      updatedAt: event.updatedAt.toISOString()
+    expect(response.body).toEqual({
+      classes,
+      event: {
+        ...event,
+        date: event.date.toISOString(),
+        createdAt: event.createdAt.toISOString(),
+        updatedAt: event.updatedAt.toISOString()
+      }
     });
   });
 });

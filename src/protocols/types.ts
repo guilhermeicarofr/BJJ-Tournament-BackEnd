@@ -28,3 +28,30 @@ export type SignInData = {
 export type FilterQuery = {
   filter: 'open' | 'closed' | 'finished'
 }
+
+export type TournamentClasses = {
+  belts: {
+    id: number;
+    name: string;
+  }[];
+  ageClasses: {
+    id: number;
+    name: string;
+    min: number;
+    max: number;
+  }[];
+	weigthClasses: {
+    male: {
+      id: number;
+      name: string;
+      min: number;
+      max: number;
+    }[];
+    female: {
+      id: number;
+      name: string;
+      min: number;
+      max: number;
+    }[];
+  };
+}

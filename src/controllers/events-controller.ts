@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
+
 import { FilterQuery } from 'protocols/types';
 import { listEventInfo, listEvents } from 'services/events-services';
+import { getClasses } from 'utils/get-local';
 
 export async function getEvents(req: Request, res: Response) {
   const { filter } = req.query as FilterQuery;
@@ -15,7 +17,8 @@ export async function getEventInfo(req: Request, res: Response) {
 
   try {
     const event = await listEventInfo(Number(eventId));
-    return res.status(httpStatus.OK).send(event);
+    const classes = await getClasses();
+    return res.status(httpStatus.OK).send({ event, classes });
   } catch (error) {
     if(error.name === 'NotFound') return res.status(httpStatus.NOT_FOUND).send(error.message);
   }
