@@ -13,14 +13,14 @@ beforeAll(async () => {
 
 const testServer = supertest(server);
 
-function generateValidBody() {
-  return {
-    email: faker.internet.email(),
-    password: faker.internet.password(6),  
-  };
-}
-
 describe('POST /auth/signin', () => {
+  function generateValidBody() {
+    return {
+      email: faker.internet.email(),
+      password: faker.internet.password(6),  
+    };
+  }
+
   it('should respond with status 400 when body is not given', async () => {
     const response = await testServer.post('/auth/signin');
 
@@ -74,6 +74,72 @@ describe('POST /auth/signin', () => {
           userId: user.id,
           userName: user.name,
         });
+      });
+    });
+  });
+});
+
+describe('POST /auth/signup', () => {
+  it('should respond with status 400 when body is not given', async () => {
+    const response = await testServer.post('/auth/signup');
+
+    expect(response.status).toBe(httpStatus.BAD_REQUEST);
+  });
+
+  it('should respond with status 400 when body is not valid', async () => {
+    const invalidBody = { [faker.lorem.word()]: faker.lorem.word() };
+
+    const response = await testServer.post('/auth/signup').send(invalidBody);
+
+    expect(response.status).toBe(httpStatus.BAD_REQUEST);
+  });
+
+  describe('when body is valid', () => {
+    it('should respond with status 403 if email is already in use', async () => {
+      const password = faker.internet.password(6);
+      const otherUser = await createUser(password);
+
+      const body = {
+        name: faker.name.firstName(),
+        cpf: String(faker.datatype.number({ min: 11111111111 })),
+        email: otherUser.email,
+        password: faker.internet.password(6),
+      };
+
+      const response = await testServer.post('/auth/signup').send(body);
+
+      expect(response.status).toBe(httpStatus.FORBIDDEN);
+    });
+
+    it('should respond with status 403 if cpf is already in use', async () => {
+      const password = faker.internet.password(6);
+      const otherUser = await createUser(password);
+
+      const body = {
+        name: faker.name.firstName(),
+        cpf: otherUser.cpf,
+        email: faker.internet.email(),
+        password: faker.internet.password(6),
+      };
+
+      const response = await testServer.post('/auth/signup').send(body);
+
+      expect(response.status).toBe(httpStatus.FORBIDDEN);
+    });
+
+    describe('when data is valid', () => {
+      it('should respond with status 201', async () => {
+         
+        const body = {
+          name: faker.name.firstName(),
+          cpf: String(faker.datatype.number({ min: 11111111111 })),
+          email: faker.internet.email(),
+          password: faker.internet.password(6),
+        };
+
+        const response = await testServer.post('/auth/signup').send(body);
+
+        expect(response.status).toBe(httpStatus.CREATED);
       });
     });
   });
