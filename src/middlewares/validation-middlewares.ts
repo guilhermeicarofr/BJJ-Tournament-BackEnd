@@ -40,11 +40,5 @@ export async function validateAuthToken(req: AuthenticatedRequest, res: Response
 }
 
 export async function lastErrorCatch(req: Request, res: Response) {
-  try {
-    return;
-  } catch (error) {
-    /* eslint-disable-next-line no-console */
-    console.log(error);
-    return res.status(httpStatus.INTERNAL_SERVER_ERROR).send('Internal Server Error');
-  }
+  return res.status(httpStatus.INTERNAL_SERVER_ERROR).send('Internal Server Error');
 }

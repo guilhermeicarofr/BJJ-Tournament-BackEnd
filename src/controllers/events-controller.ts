@@ -1,18 +1,22 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
 
 import { FilterQuery } from 'protocols/types';
 import { listEventInfo, listEvents } from 'services/events-services';
 import { getClasses } from 'utils/get-local';
 
-export async function getEvents(req: Request, res: Response) {
+export async function getEvents(req: Request, res: Response, next: NextFunction) {
   const { filter } = req.query as FilterQuery;
   
-  const events = await listEvents(filter);
-  return res.status(httpStatus.OK).send(events);
+  try {
+    const events = await listEvents(filter);
+    return res.status(httpStatus.OK).send(events);    
+  } catch (error) {
+    return next();
+  }
 }
 
-export async function getEventInfo(req: Request, res: Response) {
+export async function getEventInfo(req: Request, res: Response, next: NextFunction) {
   const { eventId } = req.params;
 
   try {
@@ -21,5 +25,6 @@ export async function getEventInfo(req: Request, res: Response) {
     return res.status(httpStatus.OK).send({ event, classes });
   } catch (error) {
     if(error.name === 'NotFound') return res.status(httpStatus.NOT_FOUND).send(error.message);
+    return next();
   }
 }
