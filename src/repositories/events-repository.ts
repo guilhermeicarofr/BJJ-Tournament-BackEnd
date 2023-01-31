@@ -72,6 +72,17 @@ async function close(eventId: number) {
   });
 }
 
+async function finish(eventId: number) {
+  return await db.event.update({
+    where: {
+      id: eventId
+    },
+    data: {
+      finished: true
+    }
+  });
+}
+
 const eventsRepository = {
   findAll,
   findOpen,
@@ -81,6 +92,7 @@ const eventsRepository = {
   findByCreator,
   create,
   close,
+  finish
 };
 
 export { eventsRepository };

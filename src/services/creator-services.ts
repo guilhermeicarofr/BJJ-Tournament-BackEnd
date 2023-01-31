@@ -20,7 +20,14 @@ export async function createNewEvent(userId: number, data: Partial<event>) {
 
 export async function closeEvent(userId: number, eventId: number) {
   const event = await checkEventOwner(userId, eventId);  
-  if(!event.open || event.finished) throw errors.conflictError('event status is conflicts with request');
-  const updatedEvent = eventsRepository.close(eventId);
-  return updatedEvent;
+  if(!event.open || event.finished) throw errors.conflictError('event status conflicts with request');
+  await eventsRepository.close(eventId);
+  return;
+}
+
+export async function finishEvent(userId: number, eventId: number) {
+  const event = await checkEventOwner(userId, eventId);  
+  if(event.open || event.finished) throw errors.conflictError('event status conflicts with request');
+  await eventsRepository.finish(eventId);
+  return;
 }
