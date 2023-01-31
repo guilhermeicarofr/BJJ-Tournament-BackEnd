@@ -4,10 +4,12 @@ import jwt from 'jsonwebtoken';
 
 import { server } from 'index';
 import { cleanDb } from '../factories/helpers';
+import { createRegistration } from '../factories/registrations-factories';
 import { createEvent } from '../factories/events-factories';
 import { createToken, createUser } from '../factories/auth-factories';
 import { faker } from '@faker-js/faker';
 import { createCategory } from '../factories/categories-factories';
+import { createFight } from '../factories/fights-factories';
 
 beforeEach(async () => {
   await cleanDb();
@@ -369,9 +371,10 @@ describe('PUT /creator/events/:eventId/finish', () => {
       weightClass: 1
     });
 
+    await createRegistration({ userId: user.id, categoryId: category.id });
+    await createRegistration({ userId: user2.id, categoryId: category.id });
 
-
-    await createFight ({
+    await createFight({
       categoryId: category.id,
       athlete1: user.id,
       athlete2: user2.id,
@@ -386,24 +389,59 @@ describe('PUT /creator/events/:eventId/finish', () => {
     expect(response.status).toBe(httpStatus.CONFLICT);
   });
 
+  it('should respond with status 402 when event there are unfinished categories', async () => {
+    const password = faker.internet.password(6);
+    const user = await createUser(password);
+    const token = await createToken(user);
 
+    const password2 = faker.internet.password(6);
+    const user2 = await createUser(password2);
 
+    const event = await createEvent({ createdBy: user.id, open: false, finished: false, absolute: false });
+    const category = await createCategory({
+      eventId:event.id,
+      absolute: false,
+      male: true,
+      belt: 1,
+      ageClass: 1,
+      weightClass: 1
+    });
+    const category2 = await createCategory({
+      eventId:event.id,
+      absolute: true,
+      male: true,
+      belt: 1,
+      ageClass: null,
+      weightClass: null
+    });
 
+    await createRegistration({ userId: user.id, categoryId: category.id });
+    await createRegistration({ userId: user2.id, categoryId: category.id });
 
+    await createRegistration({ userId: user.id, categoryId: category2.id });
+    await createRegistration({ userId: user2.id, categoryId: category2.id });
 
+    await createFight({
+      categoryId: category.id,
+      athlete1: user.id,
+      athlete2: user2.id,
+      winner: user2.id,
+      previousFight1: null,
+      previousFight2: null,
+      final: true
+    });
 
+    const response = await testServer.put(`/creator/events/${event.id}/finish`).set('Authorization', `Bearer ${token}`);
 
-
-
-
-
+    expect(response.status).toBe(httpStatus.CONFLICT);
+  });
 
   it('should respond with status 200 and update event', async () => {
     const password = faker.internet.password(6);
     const user = await createUser(password);
     const token = await createToken(user);
 
-    const event = await createEvent({ createdBy: user.id, open: true, finished: false, absolute: false });
+    const event = await createEvent({ createdBy: user.id, open: false, finished: false, absolute: false });
 
     const response = await testServer.put(`/creator/events/${event.id}/finish`).set('Authorization', `Bearer ${token}`);
 

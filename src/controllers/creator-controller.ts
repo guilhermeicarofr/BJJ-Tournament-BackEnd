@@ -51,6 +51,7 @@ export async function putEventFinished(req: AuthRequest, res: Response, next: Ne
   } catch (error) {
     if(error.name === 'NotAllowed') return res.status(httpStatus.FORBIDDEN).send(error.message);
     if(error.name === 'Conflict') return res.status(httpStatus.CONFLICT).send(error.message);
+    if(error.name === 'NotFound') return res.status(httpStatus.NOT_FOUND).send(error.message);
     return next();
   }
 }
