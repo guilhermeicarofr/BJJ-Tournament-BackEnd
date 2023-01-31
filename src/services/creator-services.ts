@@ -6,6 +6,7 @@ import { fightsRepository } from "repositories/fights-repository";
 
 async function checkEventOwner(userId: number, eventId: number) {
   const event = await eventsRepository.findById(eventId);
+  if(!event) throw errors.notFoundError();
   if(event.createdBy !== userId) throw errors.notAllowedError();
   return event;
 }

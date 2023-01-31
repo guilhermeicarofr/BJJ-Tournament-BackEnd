@@ -20,8 +20,8 @@ CREATE TABLE "categories" (
     "absolute" BOOLEAN NOT NULL,
     "male" BOOLEAN NOT NULL,
     "belt" INTEGER NOT NULL,
-    "weightClass" INTEGER NOT NULL,
-    "ageClass" INTEGER NOT NULL,
+    "weightClass" INTEGER,
+    "ageClass" INTEGER,
     "createdAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deletedAt" TIMESTAMP(6),
@@ -50,7 +50,7 @@ CREATE TABLE "event" (
 -- CreateTable
 CREATE TABLE "fights" (
     "id" SERIAL NOT NULL,
-    "categoriesId" INTEGER NOT NULL,
+    "categoryId" INTEGER NOT NULL,
     "athlete1" INTEGER NOT NULL,
     "athlete2" INTEGER NOT NULL,
     "winner" INTEGER,
@@ -106,7 +106,7 @@ ALTER TABLE "categories" ADD CONSTRAINT "categories_fk0" FOREIGN KEY ("eventId")
 ALTER TABLE "event" ADD CONSTRAINT "event_fk0" FOREIGN KEY ("createdBy") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "fights" ADD CONSTRAINT "fights_fk0" FOREIGN KEY ("categoriesId") REFERENCES "categories"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "fights" ADD CONSTRAINT "fights_fk0" FOREIGN KEY ("categoryId") REFERENCES "categories"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "fights" ADD CONSTRAINT "fights_fk1" FOREIGN KEY ("athlete1") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
