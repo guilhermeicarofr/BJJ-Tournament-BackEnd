@@ -1,3 +1,4 @@
+import { event } from '@prisma/client';
 import { db } from 'database/database';
 
 async function findAll() {
@@ -47,13 +48,27 @@ async function findByCreator(createdBy: number) {
   });
 }
 
+async function create(userId: number, data: Partial<event>) {
+  return await db.event.create({
+    data: {
+      createdBy: userId,
+      name: data.name,
+      date: data.date,
+      price: data.price,
+      absolute: data.absolute,
+      description: data.description
+    },
+  });
+}
+
 const eventsRepository = {
   findAll,
   findOpen,
   findClosed,
   findFinished,
   findById,
-  findByCreator
+  findByCreator,
+  create,
 };
 
 export { eventsRepository };
