@@ -61,6 +61,17 @@ async function create(userId: number, data: Partial<event>) {
   });
 }
 
+async function close(eventId: number) {
+  return await db.event.update({
+    where: {
+      id: eventId
+    },
+    data: {
+      open: false
+    }
+  });
+}
+
 const eventsRepository = {
   findAll,
   findOpen,
@@ -69,6 +80,7 @@ const eventsRepository = {
   findById,
   findByCreator,
   create,
+  close,
 };
 
 export { eventsRepository };

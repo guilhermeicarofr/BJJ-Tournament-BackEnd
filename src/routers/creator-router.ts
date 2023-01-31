@@ -1,4 +1,4 @@
-import { getCreatedEvents, postNewEvent } from 'controllers/creator-controller';
+import { getCreatedEvents, postNewEvent, putEventClosed } from 'controllers/creator-controller';
 import { Router } from 'express';
 
 import { validateAuthToken, validateSchema } from 'middlewares/validation-middlewares';
@@ -10,9 +10,9 @@ creatorRouter
   .use('/*', validateAuthToken)
   .get('/events', getCreatedEvents)
   .post('/events', validateSchema(schemas.newEvent, 'body'), postNewEvent)
+  .put('/events/:eventId/close', validateSchema(schemas.idParam('eventId'), 'params'), putEventClosed)
 //.middleware to check event ownership
-//.put('/events/:eventId/close')
-//.put('/events/:eventId/run')
+//.put('/events/:eventId/start'
 //.put('/events/:eventId/finish')
 
 export { creatorRouter };
