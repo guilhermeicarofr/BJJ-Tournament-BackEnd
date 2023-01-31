@@ -1,8 +1,8 @@
-import { event } from "@prisma/client";
-import { NextFunction, Response } from "express";
-import httpStatus from "http-status";
-import { AuthRequest } from "protocols/types";
-import { closeEvent, createNewEvent, finishEvent, listCreatorEvents } from "services/creator-services";
+import { event } from '@prisma/client';
+import { NextFunction, Response } from 'express';
+import httpStatus from 'http-status';
+import { AuthRequest } from 'protocols/types';
+import { closeEvent, createNewEvent, finishEvent, listCreatorEvents } from 'services/creator-services';
 
 export async function getCreatedEvents(req: AuthRequest, res: Response, next: NextFunction) {
   const { userId } = req.auth;

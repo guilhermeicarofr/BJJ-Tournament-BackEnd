@@ -211,7 +211,7 @@ describe('PUT /creator/events/:eventId/close', () => {
       const user = await createUser(password);
       const token = await createToken(user);
 
-      const response = await testServer.put(`/creator/events/0/close`).set('Authorization', `Bearer ${token}`);
+      const response = await testServer.put('/creator/events/0/close').set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(httpStatus.BAD_REQUEST);
     });
@@ -266,9 +266,6 @@ describe('PUT /creator/events/:eventId/close', () => {
   });
 });
 
-
-
-
 describe('PUT /creator/events/:eventId/finish', () => {
   describe('when login authorization is invalid', () => {
     it('should respond with status 401 if no token is given', async () => {
@@ -311,7 +308,7 @@ describe('PUT /creator/events/:eventId/finish', () => {
       const user = await createUser(password);
       const token = await createToken(user);
 
-      const response = await testServer.put(`/creator/events/0/finish`).set('Authorization', `Bearer ${token}`);
+      const response = await testServer.put('/creator/events/0/finish').set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(httpStatus.BAD_REQUEST);
     });
@@ -363,7 +360,7 @@ describe('PUT /creator/events/:eventId/finish', () => {
 
     const event = await createEvent({ createdBy: user.id, open: false, finished: false, absolute: false });
     const category = await createCategory({
-      eventId:event.id,
+      eventId: event.id,
       absolute: false,
       male: true,
       belt: 1,
@@ -399,7 +396,7 @@ describe('PUT /creator/events/:eventId/finish', () => {
 
     const event = await createEvent({ createdBy: user.id, open: false, finished: false, absolute: false });
     const category = await createCategory({
-      eventId:event.id,
+      eventId: event.id,
       absolute: false,
       male: true,
       belt: 1,
@@ -407,7 +404,7 @@ describe('PUT /creator/events/:eventId/finish', () => {
       weightClass: 1
     });
     const category2 = await createCategory({
-      eventId:event.id,
+      eventId: event.id,
       absolute: true,
       male: true,
       belt: 1,

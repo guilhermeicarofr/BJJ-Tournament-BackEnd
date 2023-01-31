@@ -11,7 +11,7 @@ creatorRouter
   .get('/events', getCreatedEvents)
   .post('/events', validateSchema(schemas.newEvent, 'body'), postNewEvent)
   .put('/events/:eventId/close', validateSchema(schemas.idParam('eventId'), 'params'), putEventClosed)
-  .put('/events/:eventId/finish', validateSchema(schemas.idParam('eventId'), 'params'), putEventFinished)
+  .put('/events/:eventId/finish', validateSchema(schemas.idParam('eventId'), 'params'), putEventFinished);
 //.put('/events/:eventId/run')
 
 export { creatorRouter };

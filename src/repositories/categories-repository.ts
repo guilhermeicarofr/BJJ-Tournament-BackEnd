@@ -1,4 +1,4 @@
-import { db } from "database/database";
+import { db } from 'database/database';
 
 async function findAllByEvent(eventId: number) {
   return await db.categories.findMany({

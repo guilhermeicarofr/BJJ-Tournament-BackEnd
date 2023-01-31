@@ -4,7 +4,7 @@ import httpStatus from 'http-status';
 
 import { loadEnv } from './setup-envs';
 import { authRouter } from 'routers/auth-router';
-import { lastErrorCatch, validateAuthToken } from 'middlewares/validation-middlewares';
+import { lastErrorCatch } from 'middlewares/validation-middlewares';
 import { eventsRouter } from 'routers/events-router';
 import { creatorRouter } from 'routers/creator-router';
 

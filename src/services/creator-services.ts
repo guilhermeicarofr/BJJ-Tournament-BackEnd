@@ -1,8 +1,8 @@
-import { event } from "@prisma/client";
-import { errors } from "errors/errors";
-import { categoriesRepository } from "repositories/categories-repository";
-import { eventsRepository } from "repositories/events-repository";
-import { fightsRepository } from "repositories/fights-repository";
+import { event } from '@prisma/client';
+import { errors } from 'errors/errors';
+import { categoriesRepository } from 'repositories/categories-repository';
+import { eventsRepository } from 'repositories/events-repository';
+import { fightsRepository } from 'repositories/fights-repository';
 
 async function checkEventOwner(userId: number, eventId: number) {
   const event = await eventsRepository.findById(eventId);
