@@ -58,7 +58,7 @@ model fights {
   categoriesId                               Int
   athlete1                                   Int
   athlete2                                   Int
-  winner                                     Int
+  winner                                     Int?
   previousFight1                             Int?
   previousFight2                             Int?
   final                                      Boolean
@@ -68,7 +68,7 @@ model fights {
   categories                                 categories @relation(fields: [categoriesId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fights_fk0")
   users_fights_athlete1Tousers               users      @relation("fights_athlete1Tousers", fields: [athlete1], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fights_fk1")
   users_fights_athlete2Tousers               users      @relation("fights_athlete2Tousers", fields: [athlete2], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fights_fk2")
-  users_fights_winnerTousers                 users      @relation("fights_winnerTousers", fields: [winner], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fights_fk3")
+  users_fights_winnerTousers                 users?      @relation("fights_winnerTousers", fields: [winner], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fights_fk3")
   fights_fights_previousFight1Tofights       fights?    @relation("fights_previousFight1Tofights", fields: [previousFight1], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fights_fk4")
   other_fights_fights_previousFight1Tofights fights[]   @relation("fights_previousFight1Tofights")
   fights_fights_previousFight2Tofights       fights?    @relation("fights_previousFight2Tofights", fields: [previousFight2], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fights_fk5")

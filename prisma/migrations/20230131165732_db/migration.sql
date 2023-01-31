@@ -53,7 +53,7 @@ CREATE TABLE "fights" (
     "categoriesId" INTEGER NOT NULL,
     "athlete1" INTEGER NOT NULL,
     "athlete2" INTEGER NOT NULL,
-    "winner" INTEGER NOT NULL,
+    "winner" INTEGER,
     "previousFight1" INTEGER,
     "previousFight2" INTEGER,
     "final" BOOLEAN NOT NULL,
