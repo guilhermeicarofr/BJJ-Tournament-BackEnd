@@ -85,3 +85,85 @@ describe('GET /creator/events', () => {
     ]));
   });
 });
+
+describe('POST /creator/events', () => {
+  describe('when login authorization is invalid', () => {
+    it('should respond with status 401 if no token is given', async () => {
+      const response = await testServer.post('/creator/events');
+  
+      expect(response.status).toBe(httpStatus.UNAUTHORIZED);
+    });
+  
+    it('should respond with status 401 if given token is not valid', async () => {
+      const token = faker.lorem.word();
+  
+      const response = await testServer.post('/creator/events').set('Authorization', `Bearer ${token}`);
+  
+      expect(response.status).toBe(httpStatus.UNAUTHORIZED);
+    });
+  
+    it('should respond with status 401 if token does not match a user', async () => {
+      const SECRET = process.env.JWT_SECRET;
+      const token = jwt.sign({ userId: 1, userName: 'Name' }, SECRET);
+  
+      const response = await testServer.post('/creator/events').set('Authorization', `Bearer ${token}`);
+  
+      expect(response.status).toBe(httpStatus.UNAUTHORIZED);
+    });
+  });
+
+  describe('when body is invalid', () => {
+    it('should respond with status 400 when body is not given', async () => {
+      const password = faker.internet.password(6);
+      const user = await createUser(password);
+      const token = await createToken(user);
+
+      const response = await testServer.post('/creator/events').set('Authorization', `Bearer ${token}`);
+  
+      expect(response.status).toBe(httpStatus.BAD_REQUEST);
+    });
+  
+    it('should respond with status 400 when body is not valid', async () => {
+      const password = faker.internet.password(6);
+      const user = await createUser(password);
+      const token = await createToken(user);
+
+      const invalidBody = { [faker.lorem.word()]: faker.lorem.word() };
+
+      const response = await testServer.post('/creator/events').send(invalidBody).set('Authorization', `Bearer ${token}`);
+
+      expect(response.status).toBe(httpStatus.BAD_REQUEST);
+    });
+  });
+
+  it('should respond with status 201 and created event', async () => {
+    const password = faker.internet.password(6);
+    const user = await createUser(password);
+    const token = await createToken(user);
+
+    const body = {
+      name: faker.company.name(),
+      date: faker.date.future(),
+      price: faker.datatype.number({ min: 0 }),
+      description: faker.lorem.paragraph(),
+      absolute: true
+    };
+
+    const response = await testServer.post('/creator/events').send(body).set('Authorization', `Bearer ${token}`);
+
+    expect(response.status).toBe(httpStatus.CREATED);
+    expect(response.body).toMatchObject(
+      expect.objectContaining({
+        createdBy: user.id,
+        name: body.name,
+        price: body.price,
+        description: body.description,
+        absolute: body.absolute,
+        open: true,
+        finished: false
+      })
+    );
+  });
+});
+
+

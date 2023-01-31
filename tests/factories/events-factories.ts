@@ -11,7 +11,7 @@ export async function createEvent({ createdBy, open, finished, absolute }: Parti
       absolute,
       name: faker.company.name(),
       date: faker.date.future(),
-      price: faker.datatype.number(),
+      price: faker.datatype.number({ min: 0 }),
       description: faker.lorem.paragraph()            
     }
   });
