@@ -3,6 +3,7 @@ import { errors } from 'errors/errors';
 import { categoriesRepository } from 'repositories/categories-repository';
 import { eventsRepository } from 'repositories/events-repository';
 import { fightsRepository } from 'repositories/fights-repository';
+import { getClasses } from 'utils/get-local';
 
 async function checkEventOwner(userId: number, eventId: number) {
   const event = await eventsRepository.findById(eventId);
@@ -44,5 +45,18 @@ export async function finishEvent(userId: number, eventId: number) {
   await checkFinishedFights(eventId);
 
   await eventsRepository.finish(eventId);
+  return;
+}
+
+export async function runEventFights(userId: number, eventId: number) {
+  const event = await checkEventOwner(userId, eventId);  
+  if(event.open || event.finished) throw errors.conflictError('event status conflicts with request');
+
+  const classes = await getClasses();
+
+
+
+
+
   return;
 }

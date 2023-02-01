@@ -2,7 +2,7 @@ import { event } from '@prisma/client';
 import { NextFunction, Response } from 'express';
 import httpStatus from 'http-status';
 import { AuthRequest } from 'protocols/types';
-import { closeEvent, createNewEvent, finishEvent, listCreatorEvents } from 'services/creator-services';
+import { closeEvent, createNewEvent, finishEvent, listCreatorEvents, runEventFights } from 'services/creator-services';
 
 export async function getCreatedEvents(req: AuthRequest, res: Response, next: NextFunction) {
   const { userId } = req.auth;
@@ -49,6 +49,22 @@ export async function putEventFinished(req: AuthRequest, res: Response, next: Ne
     await finishEvent(userId, Number(eventId));
     return res.sendStatus(httpStatus.OK);
   } catch (error) {
+    if(error.name === 'NotAllowed') return res.status(httpStatus.FORBIDDEN).send(error.message);
+    if(error.name === 'Conflict') return res.status(httpStatus.CONFLICT).send(error.message);
+    if(error.name === 'NotFound') return res.status(httpStatus.NOT_FOUND).send(error.message);
+    return next();
+  }
+}
+
+export async function postEventFights(req: AuthRequest, res: Response, next: NextFunction) {
+  const { userId } = req.auth;
+  const { eventId } = req.params;
+
+  try {
+    await runEventFights(userId, Number(eventId));
+    return res.sendStatus(httpStatus.CREATED);
+  } catch (error) {
+    //
     if(error.name === 'NotAllowed') return res.status(httpStatus.FORBIDDEN).send(error.message);
     if(error.name === 'Conflict') return res.status(httpStatus.CONFLICT).send(error.message);
     if(error.name === 'NotFound') return res.status(httpStatus.NOT_FOUND).send(error.message);
