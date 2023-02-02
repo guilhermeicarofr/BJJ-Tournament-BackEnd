@@ -53,9 +53,11 @@ export async function runEventFights(userId: number, eventId: number) {
   if(event.open || event.finished) throw errors.conflictError('event status conflicts with request');
 
   const categories = await listEventCategories(eventId);
-  categories.forEach(async (category) => {
-    await createCategoryFights(category.id);
-  });
+  const created = [] as number[];
+  for(let i=0; i<categories.length; i++) {
+    const status = await createCategoryFights(categories[i].id);
+    if(status) created.push(categories[i].id);
+  }
 
-  return;
+  return created;
 }

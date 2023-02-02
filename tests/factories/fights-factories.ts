@@ -15,3 +15,13 @@ export async function createFight({ categoryId, round, athlete1, athlete2, winne
     }
   });
 }
+
+export async function countFights(eventId: number) {
+  return await db.fights.count({
+    where: {
+      categories: {
+        eventId
+      }
+    }
+  });  
+}

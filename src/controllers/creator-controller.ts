@@ -61,8 +61,8 @@ export async function postEventFights(req: AuthRequest, res: Response, next: Nex
   const { eventId } = req.params;
 
   try {
-    await runEventFights(userId, Number(eventId));
-    return res.sendStatus(httpStatus.CREATED);
+    const categories = await runEventFights(userId, Number(eventId));
+    return res.status(httpStatus.CREATED).send(categories);
   } catch (error) {
     //
     if(error.name === 'NotAllowed') return res.status(httpStatus.FORBIDDEN).send(error.message);

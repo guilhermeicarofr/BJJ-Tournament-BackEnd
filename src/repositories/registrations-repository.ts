@@ -1,4 +1,4 @@
-import { db } from "database/database"
+import { db } from 'database/database';
 
 async function findAllByCategory(categoryId: number) {
   return await db.registrations.findMany({
@@ -10,6 +10,6 @@ async function findAllByCategory(categoryId: number) {
 
 const registrationsRepository = {
   findAllByCategory
-}
+};
 
 export { registrationsRepository };

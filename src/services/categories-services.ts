@@ -1,8 +1,7 @@
-import { listEventInfo } from "./events-services";
+import { listEventInfo } from './events-services';
 import { categoriesRepository } from 'repositories/categories-repository';
-import { categories } from "@prisma/client";
-import { registrationsRepository } from "repositories/registrations-repository";
-import { fightsRepository } from "repositories/fights-repository";
+import { registrationsRepository } from 'repositories/registrations-repository';
+import { fightsRepository } from 'repositories/fights-repository';
 
 function calcRoundSkippers(nCompetitors: number) {
   let nRounds = 0;
@@ -26,10 +25,10 @@ function calcRoundSkippers(nCompetitors: number) {
 }
 
 function chooseNRandomIndexes(n: number, range: number) {
-  let indexes = [] as number[];
+  const indexes = [] as number[];
 
   while (indexes.length < n) {
-    let random = Math.floor(Math.random() * (range));
+    const random = Math.floor(Math.random() * (range));
     if (!indexes.includes(random)) {
       indexes.push(random);
     }
@@ -48,7 +47,7 @@ export async function createCategoryFights(categoryId: number) {
   const fighters = await registrationsRepository.findAllByCategory(categoryId);
   const nCompetitors = fighters.length;
   
-  if(!nCompetitors) return;
+  if(!nCompetitors) return false;
 
   //if there is only one competitor, final fight is set and finished with victory
   if(nCompetitors === 1) {
@@ -58,16 +57,16 @@ export async function createCategoryFights(categoryId: number) {
       final: true,
       previousFight1: null,
       previousFight2: null,
-      athlete1: fighters[0].id,
+      athlete1: fighters[0].userId,
       athlete2: null,
-      winner: fighters[0].id
+      winner: fighters[0].userId
     });
-    return;
+    return true;
   }
 
   //calculating and sorting fighters that will skip the first round fight, if any
   const { nRounds, nSkippers } = calcRoundSkippers(nCompetitors);
-  const { indexes } = chooseNRandomIndexes(nSkippers, nCompetitors)
+  const { indexes } = chooseNRandomIndexes(nSkippers, nCompetitors);
   const firstRoundSkippers = fighters.filter((fighter, index) => indexes.includes(index));  
 
   //calculating fighters that will fight the first round fights
@@ -86,6 +85,8 @@ export async function createCategoryFights(categoryId: number) {
       winner: null
     });
   }
+
+  if(nRounds === 1) return true;
 
   //getting first round fights from database
   const firstRoundFights = await fightsRepository.findCategoryRoundFights(categoryId, 1);
@@ -118,10 +119,10 @@ export async function createCategoryFights(categoryId: number) {
       categoryId,
       round: 2,
       final: (nRounds === 2),
-      previousFight1: fight1.id || null,
-      previousFight2: fight2.id || null,
-      athlete1: athlete1.id || null,
-      athlete2: athlete2.id || null,
+      previousFight1: fight1?.id || null,
+      previousFight2: fight2?.id || null,
+      athlete1: athlete1?.userId || null,
+      athlete2: athlete2?.userId || null,
       winner: null
     });
 
@@ -144,5 +145,5 @@ export async function createCategoryFights(categoryId: number) {
       });  
     }
   }
-  return;
+  return true;
 }
