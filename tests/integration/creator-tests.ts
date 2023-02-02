@@ -373,6 +373,7 @@ describe('PUT /creator/events/:eventId/finish', () => {
 
     await createFight({
       categoryId: category.id,
+      round: 1,
       athlete1: user.id,
       athlete2: user2.id,
       winner: null,
@@ -420,6 +421,7 @@ describe('PUT /creator/events/:eventId/finish', () => {
 
     await createFight({
       categoryId: category.id,
+      round: 1,
       athlete1: user.id,
       athlete2: user2.id,
       winner: user2.id,

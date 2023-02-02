@@ -62,6 +62,7 @@ model fights {
   previousFight1                             Int?
   previousFight2                             Int?
   final                                      Boolean
+  round                                      Int
   createdAt                                  DateTime   @default(now()) @db.Timestamp(6)
   updatedAt                                  DateTime   @default(now()) @db.Timestamp(6)
   deletedAt                                  DateTime?  @db.Timestamp(6)

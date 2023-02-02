@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "fights" ALTER COLUMN "athlete1" DROP NOT NULL,
-ALTER COLUMN "athlete2" DROP NOT NULL;
