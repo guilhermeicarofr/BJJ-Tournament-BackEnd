@@ -40,6 +40,54 @@ async function findCategoryRoundFights(categoryId: number, round: number) {
   });
 }
 
+async function findById(id: number) {
+  return await db.fights.findUnique({
+    where: {
+      id
+    },
+    include: {
+      categories: {
+        include: {
+          event: true
+        }
+      }
+    }
+  });
+}
+
+async function findNextFight(fightId: number) {
+  return await db.fights.findFirst({
+    where: {
+      OR: [
+        { previousFight1: fightId },
+        { previousFight2: fightId }
+      ]
+    }
+  });
+}
+
+async function updatePrevFight({ fightId, prev, winnerId }: { fightId: number, prev: ('athlete1' | 'athlete2'), winnerId: number }) {
+  return await db.fights.update({
+    where: {
+      id: fightId
+    },
+    data: {
+      [prev]: winnerId
+    }
+  });
+}
+
+async function updateWinner(fightId: number, winnerId: number) {
+  return await db.fights.update({
+    where: {
+      id: fightId
+    },
+    data: {
+      winner: winnerId
+    }
+  });
+}
+
 async function create({ categoryId, round, final, previousFight1, previousFight2, athlete1, athlete2, winner }: Partial<fights>) {
   return await db.fights.create({
     data: {
@@ -60,7 +108,11 @@ const fightsRepository = {
   findAllNotFinishedInEvent,
   findAllByCategory,
   findCategoryRoundFights,
-  create
+  findById,
+  findNextFight,
+  create,
+  updateWinner,
+  updatePrevFight
 };
 
 export { fightsRepository };

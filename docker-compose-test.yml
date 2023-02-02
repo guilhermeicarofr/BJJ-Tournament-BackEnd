@@ -23,4 +23,4 @@ services:
       - -c
       - |
         npm run test:migration:apply
-        npm run test:watch
+        npm run test:coverage

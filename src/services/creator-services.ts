@@ -3,6 +3,7 @@ import { errors } from 'errors/errors';
 import { categoriesRepository } from 'repositories/categories-repository';
 import { eventsRepository } from 'repositories/events-repository';
 import { fightsRepository } from 'repositories/fights-repository';
+import { userRepository } from 'repositories/user-repository';
 import { createCategoryFights, listEventCategories } from './categories-services';
 
 async function checkEventOwner(userId: number, eventId: number) {
@@ -60,4 +61,26 @@ export async function runEventFights(userId: number, eventId: number) {
   }
 
   return created;
+}
+
+export async function setFightWinner({ userId, fightId, winnerId }: { userId: number, fightId: number, winnerId: number }) {
+  const fight = await fightsRepository.findById(fightId);
+
+  if(!fight) throw errors.notFoundError();
+  if(fight.categories.event.createdBy !== userId) throw errors.notAllowedError();
+  if(fight.winner) throw errors.conflictError('fight already has a winner');
+  if(!fight.athlete1 || !fight.athlete2) throw errors.conflictError('winner cannot be set before fight is arranged');
+
+  const fighter = await userRepository.findById(winnerId);
+  if(!fighter) throw errors.notFoundError();
+
+  await fightsRepository.updateWinner(fightId, winnerId);
+
+  if(fight.final) return;
+
+  const nextFight = await fightsRepository.findNextFight(fightId);
+  if(nextFight.previousFight1 === fightId) await fightsRepository.updatePrevFight({ fightId: nextFight.id, prev: 'athlete1', winnerId });
+  if(nextFight.previousFight1 === fightId) await fightsRepository.updatePrevFight({ fightId: nextFight.id, prev: 'athlete2', winnerId });
+  
+  return;
 }
