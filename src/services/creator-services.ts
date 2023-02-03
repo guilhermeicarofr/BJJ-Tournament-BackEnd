@@ -68,11 +68,13 @@ export async function setFightWinner({ userId, fightId, winnerId }: { userId: nu
 
   if(!fight) throw errors.notFoundError();
   if(fight.categories.event.createdBy !== userId) throw errors.notAllowedError();
-  if(fight.winner) throw errors.conflictError('fight already has a winner');
-  if(!fight.athlete1 || !fight.athlete2) throw errors.conflictError('winner cannot be set before fight is arranged');
 
   const fighter = await userRepository.findById(winnerId);
   if(!fighter) throw errors.notFoundError();
+
+  if(fight.winner) throw errors.conflictError('fight already has a winner');
+  if(!fight.athlete1 || !fight.athlete2) throw errors.conflictError('winner cannot be set before fight is arranged');
+  if(fight.athlete1 !== winnerId && fight.athlete2 !== winnerId) throw errors.conflictError('winner is not one of the fighters');
 
   await fightsRepository.updateWinner(fightId, winnerId);
 

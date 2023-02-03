@@ -25,3 +25,11 @@ export async function countFights(eventId: number) {
     }
   });  
 }
+
+export async function getFight(fightId: number) {
+  return await db.fights.findUnique({
+    where: {
+      id: fightId
+    }
+  });
+}

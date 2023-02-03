@@ -13,6 +13,6 @@ creatorRouter
   .put('/events/:eventId/close', validateSchema(schemas.idParam('eventId'), 'params'), putEventClosed)
   .put('/events/:eventId/finish', validateSchema(schemas.idParam('eventId'), 'params'), putEventFinished)
   .post('/events/:eventId/fights', validateSchema(schemas.idParam('eventId'), 'params'), postEventFights)
-  .put('/fights/:fightId', validateSchema(schemas.idParam('fightId'), 'params'), validateSchema(schemas.idParam('winnerId'), 'body'), putFightWinner);
+  .put('/fights/:fightId/winner', validateSchema(schemas.idParam('fightId'), 'params'), validateSchema(schemas.idParam('winnerId'), 'body'), putFightWinner);
 
 export { creatorRouter };
