@@ -302,7 +302,7 @@ describe('PUT /creator/fights/:fightId/winner', () => {
       const token = await createToken(user);
 
       const response = await testServer
-        .put(`/creator/fights/0/winner`)
+        .put('/creator/fights/0/winner')
         .send({ winnerId: faker.datatype.number({ min: 1 }) })
         .set('Authorization', `Bearer ${token}`);
 
@@ -328,7 +328,7 @@ describe('PUT /creator/fights/:fightId/winner', () => {
   
       const response = await testServer
         .put(`/creator/fights/${faker.datatype.number({ min: 1 })}/winner`)
-        .send({ winnerId: 0})
+        .send({ winnerId: 0 })
         .set('Authorization', `Bearer ${token}`);
   
       expect(response.status).toBe(httpStatus.BAD_REQUEST);
@@ -341,7 +341,7 @@ describe('PUT /creator/fights/:fightId/winner', () => {
   
       const response = await testServer
         .put(`/creator/fights/${faker.datatype.number({ min: 1 })}/winner`)
-        .send({ winnerId: 'string'})
+        .send({ winnerId: 'string' })
         .set('Authorization', `Bearer ${token}`);
   
       expect(response.status).toBe(httpStatus.BAD_REQUEST);
