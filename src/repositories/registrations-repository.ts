@@ -7,6 +7,9 @@ async function findAllByCategory(categoryId: number) {
     },
     include: {
       users: {
+        select: {
+          name: true
+        },
         include: {
           athleteInfo: true
         }
