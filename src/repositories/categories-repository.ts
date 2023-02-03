@@ -8,8 +8,17 @@ async function findAllByEvent(eventId: number) {
   });
 }
 
+async function findById(categoryId: number) {
+  return await db.categories.findUnique({
+    where: {
+      id: categoryId
+    }
+  });
+}
+
 const categoriesRepository = {
-  findAllByEvent
+  findAllByEvent,
+  findById
 };
 
 export { categoriesRepository };

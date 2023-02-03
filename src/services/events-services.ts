@@ -13,3 +13,4 @@ export async function listEventInfo(eventId: number) {
   if(!event) throw errors.notFoundError();
   return event;
 }
+

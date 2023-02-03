@@ -27,6 +27,9 @@ async function findAllByCategory(categoryId: number) {
   return await db.fights.findMany({
     where: {
       categoryId
+    },
+    orderBy: {
+      round: 'asc'
     }
   });
 }
