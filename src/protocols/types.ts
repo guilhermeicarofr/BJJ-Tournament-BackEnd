@@ -18,16 +18,23 @@ export type SignUpData = {
   cpf: string;
   email: string;
   password: string;
-}
+};
 
 export type SignInData = {
   email: string;
   password: string;
-}
+};
 
 export type FilterQuery = {
   filter: 'open' | 'closed' | 'finished'
-}
+};
+
+type Auth = { auth: 
+  {
+    userId: number;
+  };
+};
+export type AuthRequest = Request & Auth;
 
 export type TournamentClasses = {
   belts: {

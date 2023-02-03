@@ -18,32 +18,27 @@ export function validateSchema(schema: Schema, type: 'body' | 'params' | 'query'
 }
 
 export async function validateAuthToken(req: AuthenticatedRequest, res: Response, next: NextFunction) {
-  const authHeader = req.header('Authorization');
-  if (!authHeader) throw errors.signInError();
-
-  const token = authHeader.split(' ')[1];
-  if (!token) throw errors.signInError();
-
   try {
-    const SECRET = process.env.JWT_SECRET;
-    const { userId } = jwt.verify(token, SECRET) as ValidatedAuthToken;
-    if (!userId) throw errors.signInError();
+    const authHeader = req.header('Authorization');
+    if (!authHeader) throw errors.signInError();
+  
+    const token = authHeader.split(' ')[1];
+    if (!token) throw errors.signInError();
 
-    await userIdCheck(userId);
+    const SECRET = process.env.JWT_SECRET;
+    const verified = jwt.verify(token, SECRET) as ValidatedAuthToken;
+
+    if (verified.userId === undefined) throw errors.signInError();
+
+    await userIdCheck(verified.userId);
     
-    req.auth = { userId };
+    req.auth = { userId: verified.userId };
     return next();
   } catch (error) {
-    if(error.name === 'InvalidSignIn') return res.status(httpStatus.UNAUTHORIZED).send(error.message);
+    return res.status(httpStatus.UNAUTHORIZED).send(error.message);
   }
 }
 
 export async function lastErrorCatch(req: Request, res: Response) {
-  try {
-    return;
-  } catch(error) {
-    /* eslint-disable-next-line no-console */
-    console.log(error);
-    return res.status(httpStatus.INTERNAL_SERVER_ERROR).send('Internal Server Error');
-  }
+  return res.status(httpStatus.INTERNAL_SERVER_ERROR).send('Internal Server Error');
 }

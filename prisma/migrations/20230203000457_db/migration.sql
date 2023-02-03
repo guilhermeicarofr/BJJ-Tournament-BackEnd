@@ -20,8 +20,8 @@ CREATE TABLE "categories" (
     "absolute" BOOLEAN NOT NULL,
     "male" BOOLEAN NOT NULL,
     "belt" INTEGER NOT NULL,
-    "weightClass" INTEGER NOT NULL,
-    "ageClass" INTEGER NOT NULL,
+    "weightClass" INTEGER,
+    "ageClass" INTEGER,
     "createdAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deletedAt" TIMESTAMP(6),
@@ -50,13 +50,14 @@ CREATE TABLE "event" (
 -- CreateTable
 CREATE TABLE "fights" (
     "id" SERIAL NOT NULL,
-    "categoriesId" INTEGER NOT NULL,
-    "athlete1" INTEGER NOT NULL,
-    "athlete2" INTEGER NOT NULL,
-    "winner" INTEGER NOT NULL,
+    "categoryId" INTEGER NOT NULL,
+    "athlete1" INTEGER,
+    "athlete2" INTEGER,
+    "winner" INTEGER,
     "previousFight1" INTEGER,
     "previousFight2" INTEGER,
     "final" BOOLEAN NOT NULL,
+    "round" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deletedAt" TIMESTAMP(6),
@@ -106,7 +107,7 @@ ALTER TABLE "categories" ADD CONSTRAINT "categories_fk0" FOREIGN KEY ("eventId")
 ALTER TABLE "event" ADD CONSTRAINT "event_fk0" FOREIGN KEY ("createdBy") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "fights" ADD CONSTRAINT "fights_fk0" FOREIGN KEY ("categoriesId") REFERENCES "categories"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "fights" ADD CONSTRAINT "fights_fk0" FOREIGN KEY ("categoryId") REFERENCES "categories"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "fights" ADD CONSTRAINT "fights_fk1" FOREIGN KEY ("athlete1") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -118,10 +119,10 @@ ALTER TABLE "fights" ADD CONSTRAINT "fights_fk2" FOREIGN KEY ("athlete2") REFERE
 ALTER TABLE "fights" ADD CONSTRAINT "fights_fk3" FOREIGN KEY ("winner") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "fights" ADD CONSTRAINT "fights_fk4" FOREIGN KEY ("previousFight1") REFERENCES "fights"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "fights" ADD CONSTRAINT "fights_fk4" FOREIGN KEY ("previousFight1") REFERENCES "fights"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "fights" ADD CONSTRAINT "fights_fk5" FOREIGN KEY ("previousFight2") REFERENCES "fights"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "fights" ADD CONSTRAINT "fights_fk5" FOREIGN KEY ("previousFight2") REFERENCES "fights"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "registrations" ADD CONSTRAINT "registrations_fk0" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;

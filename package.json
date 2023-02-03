@@ -4,9 +4,9 @@
   "description": "A web service to create, manage and register BJJ athletes to tournaments",
   "main": "./dist/index.js",
   "scripts": {
-    "launch:dev": "sudo docker-compose -f docker-compose-dev.yml up",
-    "launch:prod": "sudo docker-compose -f docker-compose-prod.yml up",
-    "launch:test": "sudo docker-compose -f docker-compose-test.yml up",
+    "launch:dev": "POSTGRES_PASSWORD=123456 sudo docker-compose -f docker-compose-dev.yml up",
+    "launch:prod": "POSTGRES_PASSWORD=123456 sudo docker-compose -f docker-compose-prod.yml up",
+    "launch:test": "POSTGRES_PASSWORD=123456 sudo docker-compose -f docker-compose-test.yml up",
     "prod": "NODE_ENV=prod npx tsc && node ./dist/index.js",
     "prod:load-envs": "dotenv -e .env.prod",
     "prod:migration:apply": "npm run prod:load-envs prisma migrate deploy",
