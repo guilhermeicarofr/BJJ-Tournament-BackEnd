@@ -1,6 +1,6 @@
-import { event } from '@prisma/client';
+import { athleteInfo, event } from '@prisma/client';
 import joi, { Schema } from 'joi';
-import { SignInData, SignUpData } from 'protocols/types';
+import { AthleteInfoData, SignInData, SignUpData } from 'protocols/types';
 
 const signUp: Schema<SignUpData>= joi.object({
   name: joi.string().required().max(250).trim(),
@@ -22,6 +22,13 @@ const newEvent: Schema<Partial<event>> = joi.object({
   absolute: joi.boolean(),
 });
 
+const athleteInfoForm: Schema<AthleteInfoData> = joi.object({
+  male: joi.boolean().required(),
+  belt: joi.number().integer().min(1).required(),
+  weight: joi.number().integer().min(0).required(),
+  age: joi.number().integer().min(0).required(),
+});
+
 const idParam = (idName: string) => {
   return joi.object({
     [idName]: joi.number().integer().min(1).required()
@@ -33,6 +40,7 @@ const schemas = {
   signIn,
   idParam,
   newEvent,
+  athleteInfoForm
 };
 
 export { schemas };

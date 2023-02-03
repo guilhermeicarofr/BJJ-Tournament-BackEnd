@@ -1,6 +1,7 @@
 import { athleteInfo } from '@prisma/client';
 
 import { errors } from 'errors/errors';
+import { AthleteInfoData } from 'protocols/types';
 import { athleteRepository } from 'repositories/athlete-repository';
 import { getClasses } from 'utils/get-local';
 
@@ -65,4 +66,12 @@ export async function listAthleteInfo(userId: number) {
     info,
     classes
   };
+}
+
+export async function createOrUpdateAthlete(userId: number, data: AthleteInfoData) {
+  const { info } = await listAthleteInfo(userId);
+
+  if(!info) await athleteRepository.createInfo(userId, data);
+  if(info) await athleteRepository.updateInfo(info.id, data);
+  return;
 }
