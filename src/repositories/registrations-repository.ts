@@ -4,6 +4,13 @@ async function findAllByCategory(categoryId: number) {
   return await db.registrations.findMany({
     where: {
       categoryId
+    },
+    include: {
+      users: {
+        include: {
+          athleteInfo: true
+        }
+      }
     }
   });
 }

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
 
 import { FilterQuery } from 'protocols/types';
-import { listCategoryFights, listEventCategories } from 'services/categories-service';
+import { listCategoryAthletes, listCategoryFights, listEventCategories } from 'services/categories-service';
 import { listEventInfo, listEvents } from 'services/events-services';
 import { getClasses } from 'utils/get-local';
 
@@ -48,6 +48,18 @@ export async function getCategoryFights(req: Request, res: Response, next: NextF
   try {
     const fights = await listCategoryFights(Number(categoryId));
     return res.status(httpStatus.OK).send(fights);
+  } catch (error) {
+    if(error.name === 'NotFound') return res.status(httpStatus.NOT_FOUND).send(error.message);
+    return next();
+  }
+}
+
+export async function getCategoryAthletes(req: Request, res: Response, next: NextFunction) {
+  const { categoryId } = req.params;
+
+  try {
+    const athletes = await listCategoryAthletes(Number(categoryId));
+    return res.status(httpStatus.OK).send(athletes);
   } catch (error) {
     if(error.name === 'NotFound') return res.status(httpStatus.NOT_FOUND).send(error.message);
     return next();
