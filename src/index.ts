@@ -7,6 +7,7 @@ import { authRouter } from 'routers/auth-router';
 import { lastErrorCatch } from 'middlewares/validation-middlewares';
 import { eventsRouter } from 'routers/events-router';
 import { creatorRouter } from 'routers/creator-router';
+import { athleteRouter } from 'routers/athlete-router';
 
 loadEnv();
 const PORT = process.env.PORT || 5000;
@@ -26,6 +27,7 @@ server
   .use('/auth', authRouter)
   .use('/events', eventsRouter)
   .use('/creator', creatorRouter)
+  .use('/athlete', athleteRouter)
   .use(lastErrorCatch);
 
 if(ENV !== 'test') {

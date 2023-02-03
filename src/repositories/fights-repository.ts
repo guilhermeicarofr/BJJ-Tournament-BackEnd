@@ -101,7 +101,6 @@ async function findFinalByCategory(categoryId: number) {
   });
 }
 
-
 async function findNextFight(fightId: number) {
   return await db.fights.findFirst({
     where: {
