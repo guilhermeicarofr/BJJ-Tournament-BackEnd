@@ -1,5 +1,3 @@
-import { listEventInfo } from './events-services';
-import { categoriesRepository } from 'repositories/categories-repository';
 import { registrationsRepository } from 'repositories/registrations-repository';
 import { fightsRepository } from 'repositories/fights-repository';
 
@@ -35,12 +33,6 @@ function chooseNRandomIndexes(n: number, range: number) {
   }
 
   return { indexes };
-}
-
-export async function listEventCategories(eventId: number) {
-  await listEventInfo(eventId);
-  const categories = await categoriesRepository.findAllByEvent(eventId);
-  return categories;
 }
 
 export async function createCategoryFights(categoryId: number) {

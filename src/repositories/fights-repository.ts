@@ -19,7 +19,7 @@ async function findAllFinalsInEvent(eventId: number) {
         eventId,
       },
       final: true
-    }
+    },
   });
 }
 
@@ -27,6 +27,21 @@ async function findAllByCategory(categoryId: number) {
   return await db.fights.findMany({
     where: {
       categoryId
+    },
+    orderBy: {
+      round: 'asc'
+    },
+    include: {
+      users_fights_athlete1Tousers: {
+        select: {
+          name: true
+        }
+      },
+      users_fights_athlete2Tousers: {
+        select: {
+          name: true
+        }
+      }
     }
   });
 }
@@ -46,6 +61,16 @@ async function findById(id: number) {
       id
     },
     include: {
+      users_fights_athlete1Tousers: {
+        select: {
+          name: true
+        }
+      },
+      users_fights_athlete2Tousers: {
+        select: {
+          name: true
+        }
+      },
       categories: {
         include: {
           event: true
@@ -54,6 +79,28 @@ async function findById(id: number) {
     }
   });
 }
+
+async function findFinalByCategory(categoryId: number) {
+  return await db.fights.findFirst({
+    where: {
+      categoryId,
+      final: true
+    },
+    include: {
+      users_fights_athlete1Tousers: {
+        select: {
+          name: true
+        }
+      },
+      users_fights_athlete2Tousers: {
+        select: {
+          name: true
+        }
+      }
+    }
+  });
+}
+
 
 async function findNextFight(fightId: number) {
   return await db.fights.findFirst({
@@ -110,6 +157,7 @@ const fightsRepository = {
   findCategoryRoundFights,
   findById,
   findNextFight,
+  findFinalByCategory,
   create,
   updateWinner,
   updatePrevFight

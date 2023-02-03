@@ -1,10 +1,12 @@
 import { event } from '@prisma/client';
+
 import { errors } from 'errors/errors';
 import { categoriesRepository } from 'repositories/categories-repository';
 import { eventsRepository } from 'repositories/events-repository';
 import { fightsRepository } from 'repositories/fights-repository';
 import { userRepository } from 'repositories/user-repository';
-import { createCategoryFights, listEventCategories } from './categories-services';
+import { listEventCategories } from './categories-service';
+import { createCategoryFights } from './creator-fights-services';
 
 async function checkEventOwner(userId: number, eventId: number) {
   const event = await eventsRepository.findById(eventId);
