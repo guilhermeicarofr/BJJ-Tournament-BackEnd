@@ -5,7 +5,7 @@ import { categoriesRepository } from 'repositories/categories-repository';
 import { eventsRepository } from 'repositories/events-repository';
 import { fightsRepository } from 'repositories/fights-repository';
 import { userRepository } from 'repositories/user-repository';
-import { listEventCategories } from './categories-service';
+import { listEventCategories } from './categories-services';
 import { createCategoryFights } from './creator-fights-services';
 
 async function checkEventOwner(userId: number, eventId: number) {

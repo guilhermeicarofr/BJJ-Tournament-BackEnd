@@ -7,9 +7,6 @@ async function findAllByCategory(categoryId: number) {
     },
     include: {
       users: {
-        select: {
-          name: true
-        },
         include: {
           athleteInfo: true
         }
@@ -18,8 +15,33 @@ async function findAllByCategory(categoryId: number) {
   });
 }
 
+async function findAllFromUserByEvent(userId: number, eventId: number) {
+  return await db.registrations.findMany({
+    where: {
+      userId,
+      categories: {
+        eventId
+      }
+    },
+    include: {
+      categories: true
+    }
+  });
+}
+
+async function create(userId: number, categoryId: number) {
+  return db.registrations.create({
+    data: {
+      userId,
+      categoryId
+    }
+  });
+}
+
 const registrationsRepository = {
-  findAllByCategory
+  findAllByCategory,
+  findAllFromUserByEvent,
+  create
 };
 
 export { registrationsRepository };

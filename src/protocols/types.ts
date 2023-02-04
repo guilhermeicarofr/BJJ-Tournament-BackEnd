@@ -25,8 +25,19 @@ export type SignInData = {
   password: string;
 };
 
+export type AthleteInfoData = {
+  age: number;
+  male: boolean;
+  belt: number;
+  weight: number;
+}
+
 export type FilterQuery = {
   filter: 'open' | 'closed' | 'finished'
+};
+
+export type AbsoluteQuery = {
+  absolute: 'true' | 'false'
 };
 
 type Auth = { auth: 

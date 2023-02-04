@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
 
 import { FilterQuery } from 'protocols/types';
-import { listCategoryAthletes, listCategoryFights, listCategoryPodium, listEventCategories } from 'services/categories-service';
+import { listCategoryAthletes, listCategoryFights, listCategoryPodium, listEventCategories } from 'services/categories-services';
 import { listEventInfo, listEvents } from 'services/events-services';
 import { getClasses } from 'utils/get-local';
 
