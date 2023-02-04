@@ -8,7 +8,7 @@ const registrationRouter = express.Router();
 
 registrationRouter
   .use('/*', validateAuthToken)
-  .get('/event/:eventId', validateSchema(schemas.idParam('eventId'), 'params'), getEventUserRegistrations)
-  .post('/event/:eventId', validateSchema(schemas.idParam('eventId'), 'params'), postUserRegistration);
+  .get('/event/:eventId', validateSchema(schemas.idParam('eventId'), 'params'), getEventUserRegistrations) //not tested
+  .post('/event/:eventId', validateSchema(schemas.idParam('eventId'), 'params'), postUserRegistration); //not tested
 
 export { registrationRouter };
