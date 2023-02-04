@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { validateAuthToken, validateSchema } from 'middlewares/validation-middlewares';
-import { getAthleteInfo, postAthleteInfo } from 'controllers/athlete-controllers';
+import { getAthleteInfo, postAthleteInfo } from 'controllers/athlete-controller';
 import { schemas } from 'schemas/schemas';
 
 const athleteRouter = express.Router();

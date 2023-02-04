@@ -36,6 +36,10 @@ export type FilterQuery = {
   filter: 'open' | 'closed' | 'finished'
 };
 
+export type AbsoluteQuery = {
+  absolute: 'true' | 'false'
+};
+
 type Auth = { auth: 
   {
     userId: number;

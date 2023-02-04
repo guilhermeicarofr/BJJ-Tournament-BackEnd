@@ -16,6 +16,8 @@ export async function listAthleteEventRegistration(userId: number, eventId: numb
 export async function createAthleteRegistration(userId: number, eventId: number, absolute: string) {
   const event = await eventsRepository.findById(eventId);
   if(!event) throw errors.notFoundError();
+  if(!event.open) throw errors.conflictError('event is closed for registration');
+  if(event.finished) throw errors.conflictError('event is finished');
 
   const athlete = await athleteRepository.findUserInfo(userId);
   const classes = await getAthleteClasses(athlete);
