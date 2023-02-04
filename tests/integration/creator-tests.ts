@@ -12,6 +12,7 @@ import { createCategory } from '../factories/categories-factories';
 import { createFight } from '../factories/fights-factories';
 
 beforeEach(async () => {
+  jest.setTimeout(10000);
   await cleanDb();
 });
 

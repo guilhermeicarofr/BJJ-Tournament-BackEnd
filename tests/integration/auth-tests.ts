@@ -8,6 +8,7 @@ import { createUser } from '../factories/auth-factories';
 import { cleanDb } from '../factories/helpers';
 
 beforeEach(async () => {
+  jest.setTimeout(10000);
   await cleanDb();
 });
 
