@@ -29,9 +29,19 @@ async function findAllFromUserByEvent(userId: number, eventId: number) {
   });
 }
 
+async function create(userId: number, categoryId: number) {
+  return db.registrations.create({
+    data: {
+      userId,
+      categoryId
+    }
+  });
+}
+
 const registrationsRepository = {
   findAllByCategory,
-  findAllFromUserByEvent
+  findAllFromUserByEvent,
+  create
 };
 
 export { registrationsRepository };
