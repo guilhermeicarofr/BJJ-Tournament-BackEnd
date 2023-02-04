@@ -9,6 +9,6 @@ const athleteRouter = express.Router();
 athleteRouter
   .use('/*', validateAuthToken)
   .get('/info', getAthleteInfo)
-  .post('/info', validateSchema(schemas.athleteInfoForm,'body'), postAthleteInfo);
+  .post('/info', validateSchema(schemas.athleteInfoForm, 'body'), postAthleteInfo);
 
 export { athleteRouter };

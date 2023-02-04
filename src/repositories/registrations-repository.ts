@@ -15,8 +15,23 @@ async function findAllByCategory(categoryId: number) {
   });
 }
 
+async function findAllFromUserByEvent(userId: number, eventId: number) {
+  return await db.registrations.findMany({
+    where: {
+      userId,
+      categories: {
+        eventId
+      }
+    },
+    include: {
+      categories: true
+    }
+  });
+}
+
 const registrationsRepository = {
-  findAllByCategory
+  findAllByCategory,
+  findAllFromUserByEvent
 };
 
 export { registrationsRepository };

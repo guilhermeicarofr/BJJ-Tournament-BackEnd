@@ -1,4 +1,4 @@
-import { athleteInfo, event } from '@prisma/client';
+import { event } from '@prisma/client';
 import joi, { Schema } from 'joi';
 import { AthleteInfoData, SignInData, SignUpData } from 'protocols/types';
 
