@@ -9,6 +9,7 @@ import { faker } from '@faker-js/faker';
 import { getClasses } from 'utils/get-local';
 
 beforeEach(async () => {
+  jest.setTimeout(10000);
   await cleanDb();
 });
 

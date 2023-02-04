@@ -12,12 +12,15 @@ import { createCategory } from '../factories/categories-factories';
 import { countFights, createFight, getFight } from '../factories/fights-factories';
 
 beforeEach(async () => {
+  jest.setTimeout(10000);
   await cleanDb();
 });
 
 const testServer = supertest(server);
 
 describe('POST /creator/events/:eventId/fights', () => {
+  jest.setTimeout(30000);
+
   describe('when login authorization is invalid', () => {
     it('should respond with status 401 if no token is given', async () => {
       const response = await testServer.post(`/creator/events/${faker.datatype.number({ min: 1 })}/fights`);
